@@ -13,7 +13,7 @@ class Index extends Controller
         $callback_url = config("xina.WB_CALLBACK_URL");
         $o = new SaeTOAuthV2($app_id, $serct);
         $code_url = $o->getAuthorizeURL( $callback_url );
-        var_dump($code_url);
+        var_dump($serct);
         //TODO:显示登录页面
         return $this->fetch('',[
             'url' => $code_url,
