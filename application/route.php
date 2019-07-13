@@ -36,6 +36,11 @@ Route::post("api/:v/user/setmotto","api/:v.User/setMotto");
 Route::get("api/:v/user/getinformation","api/:v.User/getDetailedInformation");
 
 Route::post("api/:v/feedback", "api/:v.Feedback/setFeedback");
+
+//xina验证回调
+Route::get("/callback","index/index/callback");
+
+
 return [
     '__pattern__' => [
         'name' => '\w+',
