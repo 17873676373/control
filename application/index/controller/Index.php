@@ -33,8 +33,6 @@ class Index extends Controller
             $keys['code'] = $_REQUEST['code'];
             $keys['redirect_uri'] = $callback_url;
             $token = $o->getAccessToken('code', $keys);
-            var_dump($token);
-            die();
         }
 
         if ($token) {
@@ -54,7 +52,8 @@ class Index extends Controller
     public function message(){
         $app_id = config("xina.WB_AKEY");
         $serct = config("xina.WB_SKEY");
-        $c = new SaeTClientV2( $app_id , $serct , $_SESSION['token']['access_token'] );
+        $token = Session::get('token');
+        $c = new SaeTClientV2( $app_id , $serct , $token['access_token'] );
         $ms  = $c->home_timeline(); // done
         $uid_get = $c->get_uid();
         $uid = $uid_get['uid'];
