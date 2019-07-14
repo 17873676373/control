@@ -40,6 +40,8 @@ Route::post("api/:v/feedback", "api/:v.Feedback/setFeedback");
 //xina验证回调
 Route::get("/callback","index/index/callback");
 
+Route::get('message','index/index/message');
+
 
 return [
     '__pattern__' => [

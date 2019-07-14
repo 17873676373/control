@@ -24,12 +24,13 @@ class Index extends Controller
     {
         $app_id = config("xina.WB_AKEY");
         $serct = config("xina.WB_SKEY");
+        $callback_url = config("xina.WB_CALLBACK_URL");
         $o = new SaeTOAuthV2($app_id, $serct);
 
         if (isset($_REQUEST['code'])) {
             $keys = array();
             $keys['code'] = $_REQUEST['code'];
-            $keys['redirect_uri'] = WB_CALLBACK_URL;
+            $keys['redirect_uri'] = $callback_url;
             $token = $o->getAccessToken('code', $keys);
         }
 
