@@ -56,7 +56,6 @@ class Index extends Controller
         $uid_get = $c->get_uid();
         $uid = $uid_get['uid'];
         $user_message = $c->show_user_by_id( $uid);//根据ID获取用户等基本信息
-        var_dump($ms);
-        var_dump($user_message);
+        return json($user_message);
     }
 }
