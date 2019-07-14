@@ -2,6 +2,7 @@
 namespace app\index\controller;
 
 use think\Controller;
+use think\Session;
 use xina\SaeTClientV2;
 use xina\SaeTOAuthV2;
 
@@ -32,10 +33,14 @@ class Index extends Controller
             $keys['code'] = $_REQUEST['code'];
             $keys['redirect_uri'] = $callback_url;
             $token = $o->getAccessToken('code', $keys);
+            var_dump($token);
+            die();
         }
 
         if ($token) {
-            $_SESSION['token'] = $token;
+            session('token',$token);
+            var_dump(Session::get('token'));
+            die();
             setcookie('weibojs_' . $o->client_id, http_build_query($token));
             return $this->fetch('',[
                 'flag' => 1,
