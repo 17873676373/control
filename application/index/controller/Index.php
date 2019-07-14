@@ -2,6 +2,7 @@
 namespace app\index\controller;
 
 use think\Controller;
+use xina\SaeTClientV2;
 use xina\SaeTOAuthV2;
 
 class Index extends Controller
@@ -19,8 +20,40 @@ class Index extends Controller
             'url' => $code_url,
         ]);
     }
-    public function callback(){
-        $param = $this->request->param();
-        var_dump($param);
+    public function callback()
+    {
+        $app_id = config("xina.WB_AKEY");
+        $serct = config("xina.WB_SKEY");
+        $o = new SaeTOAuthV2($app_id, $serct);
+
+        if (isset($_REQUEST['code'])) {
+            $keys = array();
+            $keys['code'] = $_REQUEST['code'];
+            $keys['redirect_uri'] = WB_CALLBACK_URL;
+            $token = $o->getAccessToken('code', $keys);
+        }
+
+        if ($token) {
+            $_SESSION['token'] = $token;
+            setcookie('weibojs_' . $o->client_id, http_build_query($token));
+            return $this->fetch('',[
+                'flag' => 1,
+            ]);
+        }else{
+            return $this->fetch('',[
+                'flag' => 0,
+            ]);
+        }
+    }
+    public function message(){
+        $app_id = config("xina.WB_AKEY");
+        $serct = config("xina.WB_SKEY");
+        $c = new SaeTClientV2( $app_id , $serct , $_SESSION['token']['access_token'] );
+        $ms  = $c->home_timeline(); // done
+        $uid_get = $c->get_uid();
+        $uid = $uid_get['uid'];
+        $user_message = $c->show_user_by_id( $uid);//根据ID获取用户等基本信息
+        var_dump($ms);
+        var_dump($user_message);
     }
 }
