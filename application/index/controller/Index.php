@@ -37,8 +37,6 @@ class Index extends Controller
 
         if ($token) {
             session('token',$token);
-            var_dump(Session::get('token'));
-            die();
             setcookie('weibojs_' . $o->client_id, http_build_query($token));
             return $this->fetch('',[
                 'flag' => 1,
