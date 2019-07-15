@@ -16,7 +16,7 @@ class Index extends Controller
         $o = new SaeTOAuthV2($app_id, $serct);
         $code_url = $o->getAuthorizeURL( $callback_url );
         var_dump($code_url);
-        //TODO:显示登录页面
+        //TODO:显示登录页面1
         return $this->fetch('',[
             'url' => $code_url,
         ]);
